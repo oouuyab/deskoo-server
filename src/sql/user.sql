@@ -1,0 +1,12 @@
+CREATE TABLE user (
+  id BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '유저 PK',
+  email VARCHAR(50) NOT NULL DEFAULT '' COMMENT '이메일',
+  name VARCHAR(15) NOT NULL DEFAULT '' COMMENT '유저 이름',
+  password VARCHAR(70) NOT NULL DEFAULT '' COMMENT '비밀번호',
+  hp_no VARCHAR(11) NOT NULL DEFAULT '' COMMENT '휴대전화 번호',
+  reg_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일시',
+
+  INDEX idx_user_email(email),
+  INDEX idx_user_name(name),
+  INDEX idx_hp_no(hp_no)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '유저' ;

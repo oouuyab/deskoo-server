@@ -6,6 +6,7 @@ import { validationSchema } from './config/env.validator.config';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { ExceptionModule } from './exception/exception.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       entities: [`${__dirname}/**/*.entity{.js,.ts}`],
       synchronize: process.env.NODE_ENV === 'local',
     }),
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
