@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import * as _ from 'lodash';
 import * as bcrypt from 'bcrypt';
 import { CreateUserReqDto, CreateUserResDto } from './dto/create-user.dto';
@@ -33,11 +33,11 @@ export class UserService {
 
   async create(createUserReqDto: CreateUserReqDto): Promise<CreateUserResDto> {
     if (await this._findOneByEmail(createUserReqDto.email)) {
-      throw new BadRequestException(ERR_MSG.ALREADY_EXIST_EMAIL);
+      throw new ConflictException(ERR_MSG.ALREADY_EXIST_EMAIL);
     }
 
     if (await this._findOneByHpNo(createUserReqDto.hpNo)) {
-      throw new BadRequestException(ERR_MSG.ALREADY_EXIST_HP_NO);
+      throw new ConflictException(ERR_MSG.ALREADY_EXIST_HP_NO);
     }
 
     const user = new UserEntity();
