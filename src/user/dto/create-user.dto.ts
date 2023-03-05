@@ -1,3 +1,4 @@
+import { Exclude, Expose } from 'class-transformer';
 import {
   IsEmail,
   IsString,
@@ -6,13 +7,46 @@ import {
   MinLength,
 } from 'class-validator';
 import { ERR_MSG } from '../../common/error-message';
+import { UserEntity } from '../entities/user.entity';
 
-export interface CreateUserResDto {
-  email: string;
+export class CreateUserResDto {
+  @Exclude()
+  private readonly _id: number;
 
-  name: string;
+  @Exclude()
+  private readonly _password: string;
 
-  regDate: Date;
+  @Exclude()
+  private readonly _email: string;
+
+  @Exclude()
+  private readonly _name: string;
+
+  @Exclude()
+  private readonly _regDate: Date;
+
+  constructor(user: UserEntity) {
+    this._id = user.id;
+    this._email = user.email;
+    this._password = user.password;
+    this._name = user.name;
+    this._regDate = user.regDate;
+  }
+
+  @Expose()
+  get email(): string {
+    return this._email;
+  }
+
+  @Expose()
+  get name(): string {
+    return this._name;
+  }
+
+  @Expose()
+  get regDate(): Date {
+    return this._regDate;
+  }
 }
 
 export class CreateUserReqDto {

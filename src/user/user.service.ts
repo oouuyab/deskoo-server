@@ -19,24 +19,24 @@ export class UserService {
     return await bcrypt.compare(password, hash);
   }
 
-  private async _findOneById(id: number): Promise<UserEntity> {
+  async findOneById(id: number): Promise<UserEntity> {
     return await this._userRepository.findOneById(id);
   }
 
-  private async _findOneByEmail(email: string): Promise<UserEntity> {
-    return await this._userRepository.findOneByEmail(email);
-  }
-
-  private async _findOneByHpNo(hpNo: string): Promise<UserEntity> {
+  async findOneByHpNo(hpNo: string): Promise<UserEntity> {
     return await this._userRepository.findOneByHpNo(hpNo);
   }
 
+  async findOneByEmail(email: string): Promise<UserEntity> {
+    return await this._userRepository.findOneByEmail(email);
+  }
+
   async create(createUserReqDto: CreateUserReqDto): Promise<CreateUserResDto> {
-    if (await this._findOneByEmail(createUserReqDto.email)) {
+    if (await this.findOneByEmail(createUserReqDto.email)) {
       throw new ConflictException(ERR_MSG.ALREADY_EXIST_EMAIL);
     }
 
-    if (await this._findOneByHpNo(createUserReqDto.hpNo)) {
+    if (await this.findOneByHpNo(createUserReqDto.hpNo)) {
       throw new ConflictException(ERR_MSG.ALREADY_EXIST_HP_NO);
     }
 
@@ -49,6 +49,6 @@ export class UserService {
 
     const result = await this._userRepository.create(user);
 
-    return _.omit(result, ['id', 'password']);
+    return new CreateUserResDto(result);
   }
 }
