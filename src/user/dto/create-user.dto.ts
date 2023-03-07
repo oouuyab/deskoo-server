@@ -12,12 +12,6 @@ import { UserEntity } from '../entities/user.entity';
 
 export class CreateUserResDto {
   @Exclude()
-  private readonly _id: number;
-
-  @Exclude()
-  private readonly _password: string;
-
-  @Exclude()
   private readonly _email: string;
 
   @Exclude()
@@ -27,9 +21,7 @@ export class CreateUserResDto {
   private readonly _regDate: Date;
 
   constructor(user: UserEntity) {
-    this._id = user.id;
     this._email = user.email;
-    this._password = user.password;
     this._name = user.name;
     this._regDate = user.regDate;
   }

@@ -19,7 +19,7 @@ export class UserService {
     return await bcrypt.compare(password, hash);
   }
 
-  async findOneById(id: number): Promise<UserEntity> {
+  private async _findOneById(id: number): Promise<UserEntity> {
     return await this._userRepository.findOneById(id);
   }
 
